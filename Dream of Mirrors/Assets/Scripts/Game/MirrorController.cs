@@ -13,7 +13,7 @@ public class MirrorController : MonoBehaviour {
 		pz.z = 0;
 		RaycastHit2D hit = Physics2D.Raycast(pz, Vector2.zero);
 		if(rotatingObject) {
-			transform.rotation = Quaternion.Euler(0.0f, 0.0f, 57 * Mathf.Atan2((pz.y - transform.position.y), (pz.x - transform.position.x)));
+			transform.rotation = Quaternion.Euler(0.0f, 0.0f, (180/Mathf.PI) * Mathf.Atan2((pz.y - transform.position.y), (pz.x - transform.position.x)));
 		}
 		
 		// Checks for mouseclick while over object
