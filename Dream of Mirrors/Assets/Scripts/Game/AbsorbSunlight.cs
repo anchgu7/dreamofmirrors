@@ -19,6 +19,7 @@ public class AbsorbSunlight : MonoBehaviour {
 	// Time for power to go down
 	public float decayTime;
 	private float lastDecay;
+
 	
 	void Awake() {
 		text.updateText(power.ToString());
@@ -33,6 +34,11 @@ public class AbsorbSunlight : MonoBehaviour {
 		
 		if (power <= 0) {
 			settle.selfDestruct();
+		}
+		else if (power >= 100 && !settle.hasCreatedNew()) {
+			power -= 50;
+			settle.growSettlement();
+			settle.GetComponentInChildren<SettlementOperations> ().createdNewSettlement = true;
 		}
 	}
 	
