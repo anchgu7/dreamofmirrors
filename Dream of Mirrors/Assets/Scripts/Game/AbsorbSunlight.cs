@@ -45,5 +45,24 @@ public class AbsorbSunlight : MonoBehaviour {
 	void OnParticleCollision(GameObject other) {
 		power += powerGain;
 		text.updateText(power.ToString());
+		//Destroy (other);
+
+		var collisionEvents = new ParticleSystem.CollisionEvent[16];
+		var particleSystem = other.GetComponent<ParticleSystem> ();
+		
+		// adjust array length
+		var safeLength = particleSystem.safeCollisionEventSize;
+		if (collisionEvents.Length < safeLength) {
+			collisionEvents = new ParticleSystem.CollisionEvent[safeLength];
+		}
+		
+		// get collision events for the gameObject that the script is attached to
+		var numCollisionEvents = particleSystem.GetCollisionEvents(gameObject, collisionEvents);
+
+		for (int i = 0; i < numCollisionEvents; i++) {
+			//Particle temp = collisionEvents[i] as Particle;
+			//Destroy(temp);
+		}
+
 	}
 }

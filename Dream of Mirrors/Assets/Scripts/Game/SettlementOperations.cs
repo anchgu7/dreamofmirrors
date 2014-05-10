@@ -20,7 +20,7 @@ public class SettlementOperations : MonoBehaviour {
 		settlementInstance = Instantiate (Settlement, test.position, test.rotation) as GameObject;
 		settlementInstance.transform.parent = Mars.transform;
 		settlementInstance.GetComponentInChildren<AbsorbSunlight>().power = 90;
-		settlementInstance.GetComponentInChildren<SettlementOperations> ().createdNewSettlement = false;
+		settlementInstance.GetComponentInChildren<SettlementOperations> ().createdNewSettlement = true;
 
 
 		//GameObject test1 = GameObject.Find("Reflector");
