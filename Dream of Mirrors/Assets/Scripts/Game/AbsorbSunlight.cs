@@ -19,13 +19,18 @@ public class AbsorbSunlight : MonoBehaviour {
 	// Time for power to go down
 	public float decayTime;
 	private float lastDecay;
+	public float startTime;
 
-	
+	void Start(){
+		startTime = Time.time;
+	}
+
 	void Awake() {
 		text.updateText(power.ToString());
 	}
 	
 	void Update() {
+
 		if (Time.time > lastDecay + decayTime) {
 			power -= powerDecay;
 			lastDecay = Time.time;
@@ -35,16 +40,22 @@ public class AbsorbSunlight : MonoBehaviour {
 		if (power <= 0) {
 			settle.selfDestruct();
 		}
-		else if (power >= 100 && !settle.hasCreatedNew()) {
-			power -= 50;
+		else if (startTime + 120 < Time.time && !(settle.hasCreatedNew())) {
+			//power -= 50;
 			settle.growSettlement();
 			settle.GetComponentInChildren<SettlementOperations> ().createdNewSettlement = true;
 		}
 	}
 	
 	void OnParticleCollision(GameObject other) {
-		power += powerGain;
-		text.updateText(power.ToString());
+
+		if (power < 150) {
+			power += powerGain;
+			//if(power > 100){
+			//	power = 100;
+			//}
+			text.updateText (power.ToString ());
+	    }
 		//Destroy (other);
 
 		var collisionEvents = new ParticleSystem.CollisionEvent[16];
