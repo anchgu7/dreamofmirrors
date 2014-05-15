@@ -13,10 +13,14 @@ public class Asteroid : MonoBehaviour {
 	void Update () {
 		if (life <= 0) {
 			Destroy(gameObject);
+            GameObject destroySound = (GameObject)GameObject.Instantiate(Resources.Load<GameObject>("Sound"));
+            destroySound.audio.clip = Resources.Load<AudioClip>("Audio/SFX/asteroid_explosion");
+            destroySound.audio.loop = false;
+            destroySound.audio.Play();
 		}
 	}
 
 	void OnParticleCollision(GameObject other) {
-		life -= 1;
+		life -= 10;
 	}
 }

@@ -13,10 +13,12 @@ public class Button : MonoBehaviour {
 		if (buttonSprite == null) {
 			if (GUI.Button (new Rect (Screen.width / 2 - widthOffset, Screen.height / 2 + heightOffset, width, height), text)) {
 				CameraFade.StartAlphaFade( Color.black, false, 2f, 0.0f, loadLevelOnComplete);
+                playButtonSound();
 			}
 		} else {
 			if (GUI.Button (new Rect (Screen.width / 2 - widthOffset, Screen.height / 2 + heightOffset, width, height), buttonSprite)) {
 				CameraFade.StartAlphaFade( Color.black, false, 2f, 0.0f, loadLevelOnComplete);
+                playButtonSound();
 			}
 		}
 		
@@ -25,4 +27,12 @@ public class Button : MonoBehaviour {
 	void loadLevelOnComplete() {
 		Application.LoadLevel (level);
 	}
+
+    void playButtonSound()
+    {
+        GameObject buttonSound = (GameObject)GameObject.Instantiate(Resources.Load<GameObject>("Sound"));
+        buttonSound.audio.clip = Resources.Load<AudioClip>("Audio/SFX/menu_button");
+        buttonSound.audio.loop = false;
+        buttonSound.audio.Play();
+    }
 }

@@ -22,6 +22,7 @@ public class AbsorbSunlight : MonoBehaviour {
 	public float decayTime;
 	private float lastDecay;
 	public float startTime;
+    public bool playSound;
 
 	void Start(){
 		startTime = Time.time;
@@ -41,12 +42,27 @@ public class AbsorbSunlight : MonoBehaviour {
 		
 		if (power <= 0) {
 			settle.selfDestruct();
+            string sound = "Audio/SFX/settlement_explosion";
+            playSFX(sound);
 		}
 		else if (startTime + 120 < Time.time && !(settle.hasCreatedNew())) {
 			//power -= 50;
 			settle.growSettlement();
 			settle.GetComponentInChildren<SettlementOperations> ().createdNewSettlement = true;
+            string sound = "Audio/SFX/settlement_expansion";
+            playSFX(sound);
 		}
+
+        if(power == maxPower && !playSound)
+        {
+            string sound = "Audio/SFX/settlement_full_energy";
+            playSFX(sound);
+            playSound = true;
+        }
+        if(power < maxPower)
+        {
+            playSound = false;
+        }
 	}
 	
 	void OnParticleCollision(GameObject other) {
@@ -58,6 +74,7 @@ public class AbsorbSunlight : MonoBehaviour {
 			//}
 			text.updatePower (power, maxPower);
 	    }
+
 		//Destroy (other);
 
 		var collisionEvents = new ParticleSystem.CollisionEvent[16];
@@ -78,4 +95,12 @@ public class AbsorbSunlight : MonoBehaviour {
 		}
 
 	}
+
+    void playSFX(string fileName)
+    {
+        GameObject SFX = (GameObject)GameObject.Instantiate(Resources.Load<GameObject>("Sound"));
+        SFX.audio.clip = Resources.Load<AudioClip>(fileName);
+        SFX.audio.loop = false;
+        SFX.audio.Play();
+    }
 }
