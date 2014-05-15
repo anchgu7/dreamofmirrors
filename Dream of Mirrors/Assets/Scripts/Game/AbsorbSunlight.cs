@@ -12,9 +12,11 @@ public class AbsorbSunlight : MonoBehaviour {
 	// Power that this settlement has
 	public float power;
 	public float powerDecay;
+	public float maxPower = 150;
 	
 	// Object that shows how much power is left
 	public PowerText text;
+	
 	
 	// Time for power to go down
 	public float decayTime;
@@ -26,7 +28,7 @@ public class AbsorbSunlight : MonoBehaviour {
 	}
 
 	void Awake() {
-		text.updateText(power.ToString());
+		text.updatePower(power, maxPower);
 	}
 	
 	void Update() {
@@ -34,7 +36,7 @@ public class AbsorbSunlight : MonoBehaviour {
 		if (Time.time > lastDecay + decayTime) {
 			power -= powerDecay;
 			lastDecay = Time.time;
-			text.updateText(power.ToString());
+			text.updatePower(power, maxPower);
 		}
 		
 		if (power <= 0) {
@@ -49,12 +51,12 @@ public class AbsorbSunlight : MonoBehaviour {
 	
 	void OnParticleCollision(GameObject other) {
 
-		if (power < 150) {
+		if (power < maxPower) {
 			power += powerGain;
 			//if(power > 100){
 			//	power = 100;
 			//}
-			text.updateText (power.ToString ());
+			text.updatePower (power, maxPower);
 	    }
 		//Destroy (other);
 

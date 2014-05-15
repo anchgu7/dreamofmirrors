@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class PowerText : MonoBehaviour {
-	public void updateText(string text) {
-		GetComponent<TextMesh>().text = text;
+	public void updatePower(float power, float max) {
+		transform.localScale = new Vector3(power/max, 1, 1);
 	}
 }
