@@ -13,19 +13,22 @@ public class SettlementOperations : MonoBehaviour {
 		Destroy(gameObject);
 	}
 
-	public void growSettlement(){
+	public void growSettlement(int spawnCount){
 		GameObject settlementInstance;
 
 		Transform test = transform.Find("EmptyPosition1");
 		settlementInstance = Instantiate (Settlement, test.position, test.rotation) as GameObject;
 		settlementInstance.transform.parent = Mars.transform;
 		settlementInstance.GetComponentInChildren<AbsorbSunlight>().power = 90;
-		settlementInstance.GetComponentInChildren<SettlementOperations> ().createdNewSettlement = true;
+		if (spawnCount > 1) {
+			settlementInstance.GetComponentInChildren<SettlementOperations> ().createdNewSettlement = true;
+		}
+		else{
+			settlementInstance.GetComponentInChildren<AbsorbSunlight>().spawnCount = spawnCount;
+			settlementInstance.GetComponentInChildren<SettlementOperations> ().createdNewSettlement = false;
 
+		}
 
-		//GameObject test1 = GameObject.Find("Reflector");
-
-		//ImplementedInActionScriptAttribute = test1.GetComponent (AbsorbSunlight);
 	}
 
 	public bool hasCreatedNew(){

@@ -22,6 +22,8 @@ public class AbsorbSunlight : MonoBehaviour {
 	public float decayTime;
 	private float lastDecay;
 	public float startTime;
+	public float spawnTime;
+	public int spawnCount = 0;
     public bool playSound;
 
 	void Start(){
@@ -45,9 +47,10 @@ public class AbsorbSunlight : MonoBehaviour {
             string sound = "Audio/SFX/settlement_explosion";
             playSFX(sound);
 		}
-		else if (startTime + 120 < Time.time && !(settle.hasCreatedNew())) {
+		else if (startTime + spawnTime < Time.time && !(settle.hasCreatedNew())) {
 			//power -= 50;
-			settle.growSettlement();
+			spawnCount++;
+			settle.growSettlement(spawnCount);
 			settle.GetComponentInChildren<SettlementOperations> ().createdNewSettlement = true;
             string sound = "Audio/SFX/settlement_expansion";
             playSFX(sound);
@@ -66,34 +69,15 @@ public class AbsorbSunlight : MonoBehaviour {
 	}
 	
 	void OnParticleCollision(GameObject other) {
-
-		if (power < maxPower) {
+		var particleSystem = other.GetComponent<ParticleSystem> ();
+		if (power < maxPower && particleSystem.tag.Equals("FocusEmitter") ){
 			power += powerGain;
-			//if(power > 100){
-			//	power = 100;
-			//}
 			text.updatePower (power, maxPower);
 	    }
-
-		//Destroy (other);
-
-		var collisionEvents = new ParticleSystem.CollisionEvent[16];
-		var particleSystem = other.GetComponent<ParticleSystem> ();
-		
-		// adjust array length
-		var safeLength = particleSystem.safeCollisionEventSize;
-		if (collisionEvents.Length < safeLength) {
-			collisionEvents = new ParticleSystem.CollisionEvent[safeLength];
+		else if(power < maxPower && particleSystem.tag.Equals("SunRays")){
+			power += (powerGain/4);
+			text.updatePower (power, maxPower);
 		}
-		
-		// get collision events for the gameObject that the script is attached to
-		var numCollisionEvents = particleSystem.GetCollisionEvents(gameObject, collisionEvents);
-
-		for (int i = 0; i < numCollisionEvents; i++) {
-			//Particle temp = collisionEvents[i] as Particle;
-			//Destroy(temp);
-		}
-
 	}
 
     void playSFX(string fileName)
