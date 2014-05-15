@@ -3,11 +3,11 @@ using System.Collections;
 
 public class LoseCondition : MonoBehaviour {
 
-	private double levelStarted;
-
 	void Update() {
 		
 		GameFields.gameTime += Time.deltaTime;
+		
+		GetComponent<TextMesh>().text = "Time Passed: " + (int) GameFields.gameTime;
 	
 		Object[] settlements = GameObject.FindGameObjectsWithTag ("Settlement");
 		if(settlements.Length == 0) {
