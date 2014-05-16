@@ -3,7 +3,7 @@ using System.Collections;
 
 public class FocusTargetLine : MonoBehaviour {
 
-	bool visible = false;
+	public bool visible = false;
 	Color color;
 
 	// Use this for initialization
@@ -27,5 +27,6 @@ public class FocusTargetLine : MonoBehaviour {
 				color.a = 0;
 			renderer.material.color = color;
 		}
+
 	}
 }

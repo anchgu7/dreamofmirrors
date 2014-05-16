@@ -34,4 +34,9 @@ public class SettlementOperations : MonoBehaviour {
 	public bool hasCreatedNew(){
 		return createdNewSettlement;
 	}
+
+	public bool isVisible()
+	{
+		return Settlement.renderer.isVisible;
+	}
 }

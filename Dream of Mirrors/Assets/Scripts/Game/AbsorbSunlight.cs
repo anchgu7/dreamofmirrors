@@ -42,12 +42,12 @@ public class AbsorbSunlight : MonoBehaviour {
 			text.updatePower(power, maxPower);
 		}
 		
-		if (power <= 0) {
+		if (power <= 0 && settle.isVisible()) {
 			settle.selfDestruct();
             string sound = "Audio/SFX/settlement_explosion";
             playSFX(sound);
 		}
-		else if (startTime + spawnTime < Time.time && !(settle.hasCreatedNew())) {
+		else if (startTime + spawnTime < Time.time && !(settle.hasCreatedNew()) && settle.isVisible()) {
 			//power -= 50;
 			spawnCount++;
 			settle.growSettlement(spawnCount);

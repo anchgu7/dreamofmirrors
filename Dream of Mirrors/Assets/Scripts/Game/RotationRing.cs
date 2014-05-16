@@ -32,6 +32,7 @@ public class RotationRing : MonoBehaviour {
 				Color color = renderer.material.color;
 				color.a = 255;
 				renderer.material.color = color;
+				GetComponentInChildren<FocusTargetLine>().visible = true;
 
 				Vector3 pz = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 				pz.z = -2;
@@ -79,6 +80,7 @@ public class RotationRing : MonoBehaviour {
 				color.a = 255;
 				renderer.material.color = color;
 			}
+			GetComponentInChildren<FocusTargetLine>().visible = true;
 		}
 		if (hoverOn) 
 		{
@@ -90,8 +92,10 @@ public class RotationRing : MonoBehaviour {
 		{
 			color.a = 0;
 			renderer.material.color = color;
+			GetComponentInChildren<FocusTargetLine>().visible = false;
 		}
 
 		hoverOn = false;
+
 	}
 }
