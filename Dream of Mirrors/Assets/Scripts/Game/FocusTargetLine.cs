@@ -5,7 +5,8 @@ public class FocusTargetLine : MonoBehaviour {
 
 	public bool visible = false;
 	Color color;
-
+	public bool collide = false;
+	public GameObject rotationRing;
 	// Use this for initialization
 	void Start () {
 	
@@ -28,5 +29,20 @@ public class FocusTargetLine : MonoBehaviour {
 			renderer.material.color = color;
 		}
 
+
 	}
+
+	void OnCollisionEnter (Collision other)
+	{
+		Debug.Log ("Collide");
+		//collide = true;
+		//rotationRing.GetComponent<RotationRing> ().setTarget (other);
+	}
+
+	void OnCollisionExit (Collision other)
+	{
+		//collide = false;
+		//rotationRing.GetComponent<RotationRing> ().clearTarget ();
+	}
+	
 }

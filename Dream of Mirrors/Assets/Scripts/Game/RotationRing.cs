@@ -12,12 +12,16 @@ public class RotationRing : MonoBehaviour {
 
 	private Ray ray;
 	private RaycastHit hit;
+	private float targetX;
+	private float targetY;
+	private bool hasTarget = false;
 
 	// Use this for initialization
 	void Start () {
 		color = renderer.material.color;
 		color.a = 0;
 		renderer.material.color = color;
+		hasTarget = false;
 	}
 	
 	// Update is called once per frame
@@ -82,6 +86,13 @@ public class RotationRing : MonoBehaviour {
 			}
 			GetComponentInChildren<FocusTargetLine>().visible = true;
 		}
+
+		if (hasTarget) {
+			transform.rotation = Quaternion.Euler(0.0f, 0.0f, (180/Mathf.PI) * Mathf.Atan2((targetY - transform.position.y), (targetX - transform.position.x)) + 90);
+			var parentTransform = transform.parent.GetComponent<Transform>();
+			parentTransform.rotation = Quaternion.Euler(0.0f, 0.0f, (180/Mathf.PI) * Mathf.Atan2((targetY - transform.position.y), (targetX - transform.position.x)) + 90);
+		}
+
 		if (hoverOn) 
 		{
 			//var childMove = gameObject.transform.FindChild("MoveFocus");
@@ -98,4 +109,15 @@ public class RotationRing : MonoBehaviour {
 		hoverOn = false;
 
 	}
+
+	/*public void setTarget(Collision target){
+		hasTarget = true;
+		targetX = target.transform.position.x;
+		targetY = target.transform.position.y;
+	
+	}
+
+	public void clearTarget(){
+		hasTarget = false;
+	}*/
 }
