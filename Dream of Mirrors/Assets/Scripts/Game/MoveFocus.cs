@@ -3,7 +3,7 @@ using System.Collections;
 
 public class MoveFocus : MonoBehaviour {
 
-	private bool rotatingObject = false;
+	//private bool rotatingObject = false;
 	
 	private Color color;
 

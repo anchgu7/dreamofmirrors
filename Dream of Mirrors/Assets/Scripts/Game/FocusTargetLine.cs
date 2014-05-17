@@ -31,18 +31,11 @@ public class FocusTargetLine : MonoBehaviour {
 
 
 	}
-
-	void OnCollisionEnter (Collision other)
-	{
-		Debug.Log ("Collide");
-		//collide = true;
-		//rotationRing.GetComponent<RotationRing> ().setTarget (other);
-	}
-
-	void OnCollisionExit (Collision other)
-	{
-		//collide = false;
-		//rotationRing.GetComponent<RotationRing> ().clearTarget ();
-	}
 	
+	void OnCollisionStay (Collision other)
+	{
+		if (Input.GetMouseButtonUp(0) && other.gameObject.tag == "Settlement") {
+			rotationRing.GetComponent<RotationRing>().setTarget (other.collider);
+		}
+	}
 }

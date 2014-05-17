@@ -12,8 +12,8 @@ public class RotationRing : MonoBehaviour {
 
 	private Ray ray;
 	private RaycastHit hit;
-	private float targetX;
-	private float targetY;
+	
+	private Collider target;
 	private bool hasTarget = false;
 
 	// Use this for initialization
@@ -72,6 +72,7 @@ public class RotationRing : MonoBehaviour {
 
 		if (rotatingObject) 
 		{
+			clearTarget ();
 			Vector3 pz = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 			pz.z = -2;
 			transform.rotation = Quaternion.Euler(0.0f, 0.0f, (180/Mathf.PI) * Mathf.Atan2((pz.y - transform.position.y), (pz.x - transform.position.x)) + 90);
@@ -88,9 +89,9 @@ public class RotationRing : MonoBehaviour {
 		}
 
 		if (hasTarget) {
-			transform.rotation = Quaternion.Euler(0.0f, 0.0f, (180/Mathf.PI) * Mathf.Atan2((targetY - transform.position.y), (targetX - transform.position.x)) + 90);
+			transform.rotation = Quaternion.Euler(0.0f, 0.0f, 10 + (180/Mathf.PI) * Mathf.Atan2((target.transform.position.y - transform.position.y), (target.transform.position.x - transform.position.x)) + 90);
 			var parentTransform = transform.parent.GetComponent<Transform>();
-			parentTransform.rotation = Quaternion.Euler(0.0f, 0.0f, (180/Mathf.PI) * Mathf.Atan2((targetY - transform.position.y), (targetX - transform.position.x)) + 90);
+			parentTransform.rotation = Quaternion.Euler(0.0f, 0.0f, 10 + (180/Mathf.PI) * Mathf.Atan2((target.transform.position.y - transform.position.y), (target.transform.position.x - transform.position.x)) + 90);
 		}
 
 		if (hoverOn) 
@@ -110,14 +111,12 @@ public class RotationRing : MonoBehaviour {
 
 	}
 
-	/*public void setTarget(Collision target){
+	public void setTarget(Collider t){
 		hasTarget = true;
-		targetX = target.transform.position.x;
-		targetY = target.transform.position.y;
-	
+		target = t;
 	}
 
 	public void clearTarget(){
 		hasTarget = false;
-	}*/
+	}
 }
