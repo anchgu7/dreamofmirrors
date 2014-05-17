@@ -3,15 +3,20 @@ using System.Collections;
 
 public class LoseCondition : MonoBehaviour {
 
+	public GameObject timer, settlement;
+
 	void Update() {
+		if (!GameFields.paused) {
+			GameFields.gameTime += Time.deltaTime;
 		
-		GameFields.gameTime += Time.deltaTime;
-		
-		GetComponent<TextMesh>().text = "Time Passed: " + (int) GameFields.gameTime;
+			timer.GetComponent<TextMesh>().text = "You have lasted:\n" + (int) (GameFields.gameTime / 3) + " hours";
 	
-		Object[] settlements = GameObject.FindGameObjectsWithTag ("Settlement");
-		if(settlements.Length == 0) {
-			Application.LoadLevel (Application.loadedLevel + 1);
+			Object[] settlements = GameObject.FindGameObjectsWithTag ("Settlement");
+			if(settlements.Length == 0) {
+				Application.LoadLevel (Application.loadedLevel + 1);
+			}
+		
+			settlement.GetComponent<TextMesh>().text = "Settlements:\n" + settlements.Length;
 		}
 	}
 	

@@ -7,6 +7,7 @@ public class GameFields : MonoBehaviour {
 	public static GameFields Instance { get { return instance; } }
 	
 	public static double gameTime;
+	public static bool paused;
 		
 	void Awake() {
 		instance = this;

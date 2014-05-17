@@ -21,27 +21,26 @@ public class MagnifierControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-		if( Physics.Raycast( ray, out hit )) 
-		{
-			if (hit.collider.gameObject == gameObject)
-			{
-				var childMove = gameObject.transform.FindChild("MoveFocus");
-				color.a = 255;
-				childMove.renderer.material.color = color;
-				//Debug.Log("hoverer");
+		if (!GameFields.paused) {
+			ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			if( Physics.Raycast( ray, out hit )) {
+				if (hit.collider.gameObject == gameObject) {
+					var childMove = gameObject.transform.FindChild("MoveFocus");
+					color.a = 255;
+					childMove.renderer.material.color = color;
+					//Debug.Log("hoverer");
 				
+					Vector3 pz = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+					pz.z = -2;
+					transform.rotation = Quaternion.Euler(0.0f, 0.0f, (180/Mathf.PI) * Mathf.Atan2((pz.y - transform.position.y), (pz.x - transform.position.x)) + 90);
+				}
+			}
+
+			if (moveObject) {
 				Vector3 pz = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 				pz.z = -2;
-				transform.rotation = Quaternion.Euler(0.0f, 0.0f, (180/Mathf.PI) * Mathf.Atan2((pz.y - transform.position.y), (pz.x - transform.position.x)) + 90);
+				transform.position = pz; //Quaternion.Euler(pz.x, pz.y, pz.z);
 			}
-		}
-
-		if (moveObject) 
-		{
-			Vector3 pz = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-			pz.z = -2;
-			transform.position = pz; //Quaternion.Euler(pz.x, pz.y, pz.z);
 		}
 	}
 

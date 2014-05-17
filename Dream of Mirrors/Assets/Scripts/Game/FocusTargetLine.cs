@@ -34,7 +34,7 @@ public class FocusTargetLine : MonoBehaviour {
 	
 	void OnCollisionStay (Collision other)
 	{
-		if (Input.GetMouseButtonUp(0) && other.gameObject.tag == "Settlement") {
+		if (Input.GetMouseButtonUp(0) && other.gameObject.tag == "EnergyCollector") {
 			rotationRing.GetComponent<RotationRing>().setTarget (other.collider);
 		}
 	}

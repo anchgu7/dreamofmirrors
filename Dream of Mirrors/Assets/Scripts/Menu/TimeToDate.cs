@@ -11,10 +11,10 @@ public class TimeToDate : MonoBehaviour {
 		day = year % 365;
 		year /= 365;
 		
-		hour = day % 120;
-		day /= 120;
+		hour = day % 60;
+		day /= 60;
 		
-		hour /= 5;
+		hour /= 3;
 		
 		GetComponent<TextMesh>().text = year + " Years, " + day + " Days, and " + hour + " Hours";
 	}

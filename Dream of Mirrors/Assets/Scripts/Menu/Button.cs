@@ -3,25 +3,19 @@ using System.Collections;
 
 public class Button : MonoBehaviour {
 	
+	
 	public int level;
 	public float widthOffset = 75, heightOffset = 50;
 	public float width = 150, height = 75;
-	public string text;
 	public Texture2D buttonSprite;
 	
 	void OnGUI() {
-		if (buttonSprite == null) {
-			if (GUI.Button (new Rect (Screen.width / 2 - widthOffset, Screen.height / 2 + heightOffset, width, height), text)) {
+		if (GUI.Button (new Rect (Screen.width / 2 - widthOffset, Screen.height / 2 + heightOffset, width, height), buttonSprite)) {
+			if(!CameraFade.fading) {
 				CameraFade.StartAlphaFade( Color.black, false, 2f, 0.0f, loadLevelOnComplete);
-                playButtonSound();
-			}
-		} else {
-			if (GUI.Button (new Rect (Screen.width / 2 - widthOffset, Screen.height / 2 + heightOffset, width, height), buttonSprite)) {
-				CameraFade.StartAlphaFade( Color.black, false, 2f, 0.0f, loadLevelOnComplete);
-                playButtonSound();
+               	playButtonSound();
 			}
 		}
-		
 	}
 	
 	void loadLevelOnComplete() {

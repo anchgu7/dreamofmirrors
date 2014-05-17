@@ -35,36 +35,33 @@ public class AbsorbSunlight : MonoBehaviour {
 	}
 	
 	void Update() {
-
-		if (Time.time > lastDecay + decayTime) {
-			power -= powerDecay;
-			lastDecay = Time.time;
-			text.updatePower(power, maxPower);
-		}
+		if (!GameFields.paused) {
+			if (Time.time > lastDecay + decayTime) {
+				power -= powerDecay;
+				lastDecay = Time.time;
+				text.updatePower(power, maxPower);
+			}
 		
-		if (power <= 0 && settle.isVisible()) {
-			settle.selfDestruct();
-            string sound = "Audio/SFX/settlement_explosion";
-            playSFX(sound);
-		}
-		else if (startTime + spawnTime < Time.time && !(settle.hasCreatedNew()) && settle.isVisible()) {
-			//power -= 50;
-			spawnCount++;
-			settle.growSettlement(spawnCount);
-			settle.GetComponentInChildren<SettlementOperations> ().createdNewSettlement = true;
-            string sound = "Audio/SFX/settlement_expansion";
-            playSFX(sound);
-		}
+			if (power <= 0 && settle.isVisible()) {
+				settle.selfDestruct();
+            	string sound = "Audio/SFX/settlement_explosion";
+            	playSFX(sound);
+			} else if (startTime + spawnTime < Time.time && !(settle.hasCreatedNew()) && settle.isVisible()) {
+				spawnCount++;
+				settle.growSettlement(spawnCount);
+				settle.GetComponentInChildren<SettlementOperations> ().createdNewSettlement = true;
+            	string sound = "Audio/SFX/settlement_expansion";
+           		playSFX(sound);
+			}
 
-        if(power == maxPower && !playSound)
-        {
-            string sound = "Audio/SFX/settlement_full_energy";
-            playSFX(sound);
-            playSound = true;
-        }
-        if(power < maxPower)
-        {
-            playSound = false;
+       	 	if(power == maxPower && !playSound) {
+            	string sound = "Audio/SFX/settlement_full_energy";
+            	playSFX(sound);
+            	playSound = true;
+       	 	}
+        	if(power < maxPower) {
+            	playSound = false;
+        	}
         }
 	}
 	
