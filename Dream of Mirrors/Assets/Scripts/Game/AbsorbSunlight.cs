@@ -59,7 +59,8 @@ public class AbsorbSunlight : MonoBehaviour {
             	playSFX(sound);
             	playSound = true;
        	 	}
-        	if(power < maxPower) {
+       	 	
+        	if(power < maxPower * .9) {
             	playSound = false;
         	}
         }

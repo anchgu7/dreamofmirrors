@@ -10,6 +10,7 @@ public class Button : MonoBehaviour {
 	public Texture2D buttonSprite;
 	
 	void OnGUI() {
+		GUI.depth = -5;
 		if (GUI.Button (new Rect (Screen.width / 2 - widthOffset, Screen.height / 2 + heightOffset, width, height), buttonSprite)) {
 			if(!CameraFade.fading) {
 				CameraFade.StartAlphaFade( Color.black, false, 2f, 0.0f, loadLevelOnComplete);

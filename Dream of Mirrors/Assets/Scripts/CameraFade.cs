@@ -43,6 +43,8 @@ public class CameraFade : MonoBehaviour
 	public float m_FadeDelay = 0;
 	public Action m_OnFadeFinish = null;
 	
+	public static bool fading = false;
+	
 	// Initialize the texture, background-style and initial color:
 	public void init()
 	{		
@@ -66,8 +68,10 @@ public class CameraFade : MonoBehaviour
 					SetScreenOverlayColor(instance.m_CurrentScreenOverlayColor);
 					instance.m_DeltaColor = new Color( 0,0,0,0 );
 					
-					if( instance.m_OnFadeFinish != null )
+					if( instance.m_OnFadeFinish != null ) {
+						fading = false;
 						instance.m_OnFadeFinish();
+					}
 					
 					Die();
 				}
@@ -182,6 +186,7 @@ public class CameraFade : MonoBehaviour
 	/// </param>
 	public static void StartAlphaFade(Color newScreenOverlayColor, bool isFadeIn, float fadeDuration, float fadeDelay, Action OnFadeFinish )
 	{
+		fading = true;
 		if (fadeDuration <= 0.0f)		
 		{
 			SetScreenOverlayColor(newScreenOverlayColor);
